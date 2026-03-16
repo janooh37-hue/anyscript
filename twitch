@@ -1,0 +1,10 @@
+#!/bin/bash
+# Twitch stream launcher with ad-skip via TTV.LOL proxy
+
+if [ -n "$1" ]; then
+    URL="$1"
+else
+    URL=$(wl-paste)
+fi
+
+streamlink --player mpv --twitch-proxy-playlist https://eu.luminous.dev,https://lb-eu.cdn-perfprod.com "$URL" best
