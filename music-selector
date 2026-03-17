@@ -1,0 +1,13 @@
+#!/bin/bash
+# Music selector - choose between YouTube Music and rmpc
+
+selected=$(echo -e "YouTube Music\nrmpc" | rofi -dmenu -i -p "Music:")
+
+case "$selected" in
+    "YouTube Music")
+        uwsm-app -- youtube-music
+        ;;
+    "rmpc")
+        uwsm-app -- xdg-terminal-exec -e rmpc
+        ;;
+esac
