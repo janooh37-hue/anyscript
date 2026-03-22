@@ -1,0 +1,18 @@
+# YouTube DL aliases - all download to ~/Downloads
+# Add these to your ~/.bashrc
+
+alias yt='yt-dlp -o "~/Downloads/%(title)s.%(ext)s" "$@"'
+alias yt-fmts='yt-dlp -F "$@"'
+alias yt-mp4='yt-dlp -f "bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]" -o "~/Downloads/%(title)s.%(ext)s" "$@"'
+alias yt-audio='yt-dlp -x -o "~/Downloads/%(title)s.%(ext)s" "$@"'
+alias yt-mp3='yt-dlp -x --audio-format mp3 --audio-quality 0 -o "~/Downloads/%(title)s.%(ext)s" "$@"'
+alias yt-play='yt-dlp -I "$@" -o "~/Downloads/%(title)s.%(ext)s"'
+
+
+# Usage:
+# yt "URL"           - Basic download
+# yt-fmts "URL"      - List available formats
+# yt-mp4 "URL"       - Download best MP4
+# yt-audio "URL"     - Extract audio
+# yt-mp3 "URL"       - Extract best MP3
+# yt-play "2,4:6,-1" "URL"  - Download specific playlist items
