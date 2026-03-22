@@ -1,0 +1,29 @@
+# Bash script system dependencies
+
+# Core
+curl
+python3
+
+# Scripts: qbit-move.sh
+qbittorrent-nox  # qBittorrent with API enabled
+
+# Scripts: twitch
+streamlink
+mpv
+
+# Scripts: omarchy-pkg-install
+fzf
+pacman
+
+# Scripts: omarchy-pkg-remove
+fzf
+yay  # AUR helper
+
+# Scripts: music-selector
+rofi
+uwsm
+
+# Optional
+ffmpeg  # For yt-dlp video/audio processing
+notify-send  # Desktop notifications
+wl-clipboard  # wl-paste for wayland clipboard access

@@ -2,6 +2,11 @@
 
 A collection of personal utility scripts for Linux.
 
+## Changelog
+
+### 2026-03-22
+- Added `requirements.txt` documenting system dependencies for all scripts
+
 ## Scripts
 
 ### qbit-move.sh
