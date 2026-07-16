@@ -5,17 +5,19 @@ A collection of personal utility scripts for Linux.
 ## Changelog
 
 ### 2026-07-16
-- Added `macro-calculator/` — a single-file web app (iOS 26 "Liquid Glass" aesthetic)
-  that turns weight + height into daily fat-loss calories and a full macro breakdown
+- Added the **Macro Calculator** web app (`index.html` at repo root) — iOS 26
+  "Liquid Glass" aesthetic, turns weight + height into daily fat-loss calories
+  and a full macro breakdown. Installable to the iOS home screen (PWA) and
+  works offline. Deployable for free via GitHub Pages.
 
 ### 2026-03-22
 - Added `requirements.txt` documenting system dependencies for all scripts
 
 ## Apps
 
-### macro-calculator
-A self-contained `index.html` (no build, no dependencies) that computes daily
-fat-loss nutrition targets from just **weight** and **height**.
+### Macro Calculator
+A self-contained `index.html` (no build, no dependencies) at the repo root that
+computes daily fat-loss nutrition targets from just **weight** and **height**.
 
 **Formula (per the source walkthrough, 100 kg example):**
 1. Weight in kg × 2.2 → pounds (`100 → 220 lb`)
@@ -30,8 +32,19 @@ fat-loss nutrition targets from just **weight** and **height**.
 - BMI, category, and a healthy-weight range for the entered height
 - kg/lb and cm/ft-in unit toggles, live updating, light & dark mode
 
-**Run it:** open `macro-calculator/index.html` in any browser
-(or `npx http-server macro-calculator`).
+**Run it locally:** open `index.html` in any browser (or `npx http-server .`).
+
+**Host it free on GitHub Pages:**
+1. On GitHub, go to **Settings → Pages**.
+2. Under **Source**, choose **Deploy from a branch**.
+3. Pick the branch (`main` after merging, or `claude/ios-macro-calculator-a56nfe`)
+   and folder **`/ (root)`**, then **Save**.
+4. After ~1 minute it's live at
+   `https://janooh37-hue.github.io/anyscript/`
+
+**Add to iPhone home screen:** open that URL in **Safari** → tap the **Share**
+button → **Add to Home Screen**. It installs as a full-screen app named
+"Macros" with its own icon, and works offline (service worker + web manifest).
 
 ## Scripts
 
