@@ -270,8 +270,92 @@
   .empty .icon { font-size: 40px; margin-bottom: 8px; opacity: 0.6; }
   .empty p { font-size: 15px; font-weight: 500; }
 
-  /* Disclaimer */
-  .foot { text-align: center; font-size: 12px; color: var(--text-dimmer); line-height: 1.5; padding: 0 12px; }
+  /* Section intro line */
+  .card-sub { font-size: 13px; color: var(--text-dim); line-height: 1.45; margin: -6px 0 16px; }
+  .card-sub strong { color: var(--text); font-weight: 700; }
+
+  /* Macro tab bar (Fuel Your Day) */
+  .macro-tabs {
+    display: flex; gap: 2px; padding: 2px; margin-bottom: 16px;
+    background: var(--seg-bg); border-radius: 12px;
+  }
+  .macro-tabs button {
+    flex: 1; border: none; background: transparent; color: var(--text-dim);
+    font-size: 13px; font-weight: 600; padding: 8px 4px; border-radius: 10px;
+    cursor: pointer; transition: color 0.2s; font-family: inherit;
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+  }
+  .macro-tabs button .tabdot { width: 8px; height: 8px; border-radius: 50%; opacity: 0; transition: opacity 0.2s; }
+  .macro-tabs button.active { color: var(--text); background: var(--seg-active); box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 0.5px 0 var(--glass-hi) inset; }
+  .macro-tabs button.active .tabdot { opacity: 1; }
+
+  /* Food rows */
+  .food-list { display: flex; flex-direction: column; gap: 2px; }
+  .food-row {
+    display: flex; align-items: center; gap: 12px; padding: 11px 6px;
+    border-bottom: 0.5px solid var(--glass-border);
+  }
+  .food-row:last-child { border-bottom: none; }
+  .food-emoji {
+    width: 38px; height: 38px; flex-shrink: 0; border-radius: 11px;
+    display: flex; align-items: center; justify-content: center; font-size: 20px;
+    background: var(--field-bg);
+  }
+  .food-main { flex: 1; min-width: 0; }
+  .food-name { font-size: 15px; font-weight: 600; }
+  .food-portion { font-size: 12.5px; color: var(--text-dim); margin-top: 1px; }
+  .food-right { text-align: right; flex-shrink: 0; }
+  .food-val { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .food-count {
+    font-size: 11px; font-weight: 700; color: var(--text-dim); margin-top: 2px;
+    background: var(--field-bg); padding: 2px 7px; border-radius: 20px; display: inline-block;
+  }
+  .food-note { font-size: 12.5px; color: var(--text-dim); line-height: 1.45; margin-top: 14px; }
+
+  /* Training strategy bullets */
+  .strategy { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+  .strat { display: flex; gap: 12px; align-items: flex-start; }
+  .strat .si { font-size: 20px; line-height: 1.2; flex-shrink: 0; width: 26px; text-align: center; }
+  .strat .st { font-size: 14px; line-height: 1.4; }
+  .strat .st b { font-weight: 700; }
+
+  .burn-title { font-size: 13px; font-weight: 700; letter-spacing: 0.3px; color: var(--text-dim); margin-bottom: 12px; }
+  .burn-title span { color: var(--cal); }
+
+  /* Exercise burn rows */
+  .burn-list { display: flex; flex-direction: column; gap: 11px; }
+  .burn-row { display: flex; align-items: center; gap: 11px; }
+  .burn-emoji { font-size: 19px; width: 26px; text-align: center; flex-shrink: 0; }
+  .burn-body { flex: 1; min-width: 0; }
+  .burn-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
+  .burn-name { font-size: 14px; font-weight: 600; }
+  .burn-kcal { font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .burn-kcal span { font-size: 11px; font-weight: 600; color: var(--text-dim); }
+  .burn-track { height: 7px; border-radius: 5px; background: var(--field-bg); overflow: hidden; }
+  .burn-fill {
+    height: 100%; border-radius: 5px; width: 0;
+    background: linear-gradient(90deg, var(--cal), #ff6b35);
+    transition: width 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Resource links */
+  .links { display: flex; flex-direction: column; gap: 10px; }
+  .link-card {
+    display: flex; align-items: center; gap: 13px; padding: 13px 14px;
+    background: var(--field-bg); border-radius: var(--radius-md);
+    border: 0.5px solid var(--glass-border); text-decoration: none; color: inherit;
+    transition: transform 0.15s, background 0.2s;
+  }
+  .link-card:active { transform: scale(0.98); }
+  .link-emoji {
+    width: 40px; height: 40px; flex-shrink: 0; border-radius: 11px; font-size: 20px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--glass-bg); border: 0.5px solid var(--glass-border);
+  }
+  .link-body { flex: 1; min-width: 0; }
+  .link-name { display: block; font-size: 15px; font-weight: 700; }
+  .link-desc { display: block; font-size: 12.5px; color: var(--text-dim); margin-top: 1px; }
+  .link-arrow { color: var(--text-dimmer); font-size: 18px; flex-shrink: 0; }
 
   /* entrance animation */
   .reveal { animation: reveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
@@ -434,6 +518,42 @@
         <div class="bmi-note" id="bmiNote">Add your height for BMI &amp; a healthy-weight range.</div>
       </section>
 
+      <!-- Fuel Your Day — food to hit each macro -->
+      <section class="card">
+        <div class="card-title">Fuel Your Day</div>
+        <p class="card-sub" id="fuelSub">Real foods that cover your targets. Tap a macro to see how much of each it takes.</p>
+        <div class="macro-tabs" id="macroTabs">
+          <button data-m="protein" class="active"><span class="tabdot" style="background:var(--protein)"></span>Protein</button>
+          <button data-m="carbs"><span class="tabdot" style="background:var(--carbs)"></span>Carbs</button>
+          <button data-m="fat"><span class="tabdot" style="background:var(--fat)"></span>Fat</button>
+          <button data-m="fiber"><span class="tabdot" style="background:var(--fiber)"></span>Fiber</button>
+        </div>
+        <div class="food-list" id="foodList"></div>
+        <p class="food-note" id="foodNote"></p>
+      </section>
+
+      <!-- Move to Burn It — training + calories burned -->
+      <section class="card">
+        <div class="card-title">Move to Burn It</div>
+        <p class="card-sub">Diet sets the calorie deficit — training decides whether you lose <strong>fat</strong> or muscle. To keep the muscle your protein is protecting:</p>
+        <div class="strategy">
+          <div class="strat"><span class="si">🏋️</span><span class="st"><b>Lift weights 3–4×/week.</b> The single strongest signal to hold onto muscle while cutting.</span></div>
+          <div class="strat"><span class="si">🚶</span><span class="st"><b>Walk 8,000–12,000 steps a day.</b> The easiest, most sustainable calorie burn there is.</span></div>
+          <div class="strat"><span class="si">❤️</span><span class="st"><b>2–3 sport or cardio sessions you enjoy.</b> You'll only keep what you actually like doing.</span></div>
+          <div class="strat"><span class="si">🔥</span><span class="st"><b>Add 1–2 short HIIT sessions</b> once the habit sticks, for extra burn in less time.</span></div>
+        </div>
+        <div class="burn-title">🔥 Burned in <span>30&nbsp;min</span> at your weight</div>
+        <div class="burn-list" id="burnList"></div>
+        <p class="food-note">Rough estimates (MET-based). Actual burn varies with intensity, fitness &amp; body composition.</p>
+      </section>
+
+      <!-- Keep Going — resources -->
+      <section class="card">
+        <div class="card-title">Keep Going</div>
+        <p class="card-sub">Trusted tools &amp; guides to track your intake, look up foods, and build a plan that lasts.</p>
+        <div class="links" id="linkList"></div>
+      </section>
+
     </div>
 
     <p class="foot">
@@ -450,6 +570,96 @@
     weightUnit: "kg", // kg | lb
     heightUnit: "cm"  // cm | ft
   };
+
+  // Latest computed macro targets (grams) + which food tab is showing.
+  var targets = { protein: 0, carbs: 0, fat: 0, fiber: 0 };
+  var activeMacro = "protein";
+
+  // ---- Data ----------------------------------------------------------------
+
+  // Food sources: grams of the given macro per everyday portion.
+  var FOODS = {
+    protein: {
+      label: "protein",
+      color: "var(--protein)",
+      items: [
+        { emoji: "🍗", name: "Chicken breast", portion: "1 fillet · 170g", val: 53 },
+        { emoji: "🥩", name: "Lean beef", portion: "150g cooked", val: 39 },
+        { emoji: "🐟", name: "Canned tuna", portion: "1 can · 120g", val: 30 },
+        { emoji: "🥤", name: "Whey protein", portion: "1 scoop", val: 24 },
+        { emoji: "🥛", name: "Greek yogurt", portion: "1 cup · 170g", val: 17 },
+        { emoji: "🫘", name: "Lentils", portion: "1 cup cooked", val: 18 },
+        { emoji: "🧈", name: "Firm tofu", portion: "150g", val: 17 },
+        { emoji: "🥚", name: "Eggs", portion: "1 large", val: 6 }
+      ]
+    },
+    carbs: {
+      label: "carbs",
+      color: "var(--carbs)",
+      items: [
+        { emoji: "🍚", name: "Rice", portion: "1 cup cooked", val: 45 },
+        { emoji: "🍝", name: "Pasta", portion: "1 cup cooked", val: 43 },
+        { emoji: "🥔", name: "Potato", portion: "1 medium · 170g", val: 37 },
+        { emoji: "🍠", name: "Sweet potato", portion: "1 medium", val: 27 },
+        { emoji: "🍌", name: "Banana", portion: "1 medium", val: 27 },
+        { emoji: "🌾", name: "Oats", portion: "½ cup dry · 40g", val: 27 },
+        { emoji: "🍞", name: "Whole-grain bread", portion: "1 slice", val: 15 },
+        { emoji: "🫐", name: "Berries", portion: "1 cup", val: 17 }
+      ]
+    },
+    fat: {
+      label: "fat",
+      color: "var(--fat)",
+      items: [
+        { emoji: "🥑", name: "Avocado", portion: "½ fruit", val: 15 },
+        { emoji: "🫒", name: "Olive oil", portion: "1 tbsp", val: 14 },
+        { emoji: "🥜", name: "Almonds", portion: "1 oz · 28g", val: 14 },
+        { emoji: "🧈", name: "Peanut butter", portion: "1 tbsp", val: 8 },
+        { emoji: "🧀", name: "Cheese", portion: "1 slice · 28g", val: 9 },
+        { emoji: "🐟", name: "Salmon", portion: "100g", val: 13 },
+        { emoji: "🌰", name: "Chia seeds", portion: "2 tbsp", val: 9 },
+        { emoji: "🥚", name: "Egg yolk", portion: "1 large egg", val: 5 }
+      ]
+    },
+    fiber: {
+      label: "fiber",
+      color: "var(--fiber)",
+      items: [
+        { emoji: "🫘", name: "Black beans", portion: "1 cup cooked", val: 15 },
+        { emoji: "🫘", name: "Lentils", portion: "1 cup cooked", val: 16 },
+        { emoji: "🫐", name: "Raspberries", portion: "1 cup", val: 8 },
+        { emoji: "🥑", name: "Avocado", portion: "½ fruit", val: 7 },
+        { emoji: "🥦", name: "Broccoli", portion: "1 cup cooked", val: 5 },
+        { emoji: "🌰", name: "Chia seeds", portion: "2 tbsp", val: 10 },
+        { emoji: "🍎", name: "Apple", portion: "1 medium", val: 4 },
+        { emoji: "🌾", name: "Oats", portion: "½ cup dry · 40g", val: 4 }
+      ]
+    }
+  };
+
+  // Activities with MET values → kcal = MET × kg × hours.
+  var ACTIVITIES = [
+    { emoji: "🪢", name: "Jump rope", met: 12.3 },
+    { emoji: "🥊", name: "Boxing", met: 9.0 },
+    { emoji: "🏃", name: "Running (8 km/h)", met: 8.3 },
+    { emoji: "🚴", name: "Cycling (moderate)", met: 7.5 },
+    { emoji: "🏊", name: "Swimming", met: 7.0 },
+    { emoji: "⚽", name: "Soccer", met: 7.0 },
+    { emoji: "🚣", name: "Rowing", met: 7.0 },
+    { emoji: "🏀", name: "Basketball", met: 6.5 },
+    { emoji: "🏋️", name: "Weight training", met: 6.0 },
+    { emoji: "🥾", name: "Hiking", met: 6.0 },
+    { emoji: "🚶", name: "Brisk walking", met: 3.8 }
+  ];
+
+  var LINKS = [
+    { emoji: "📊", name: "Cronometer", desc: "Free, accurate macro & micronutrient tracker", url: "https://cronometer.com/" },
+    { emoji: "🥗", name: "USDA FoodData Central", desc: "Official calorie & macro lookup for any food", url: "https://fdc.nal.usda.gov/" },
+    { emoji: "🔬", name: "Examine", desc: "Evidence-based nutrition & supplement guides", url: "https://examine.com/" },
+    { emoji: "💪", name: "The Fitness Wiki", desc: "r/fitness beginner routines & straight answers", url: "https://thefitness.wiki/" },
+    { emoji: "🩺", name: "NHS Healthy Weight", desc: "Safe, balanced weight-loss guidance", url: "https://www.nhs.uk/live-well/healthy-weight/" },
+    { emoji: "🏅", name: "CDC Physical Activity", desc: "How much exercise you actually need", url: "https://www.cdc.gov/physical-activity-basics/" }
+  ];
 
   var $ = function (id) { return document.getElementById(id); };
 
@@ -592,10 +802,92 @@
 
     // ---- Body composition (needs height) ----
     renderBMI(kg, getHeightCm());
+
+    // ---- Action steps: food, exercise ----
+    targets = { protein: protein, carbs: carbsClamped, fat: fat, fiber: fiber };
+    renderFood(activeMacro);
+    renderBurn(kg);
   }
 
   function setTileGrams(el, grams) {
     el.innerHTML = Math.round(grams) + "<span>g</span>";
+  }
+
+  // ---- Fuel Your Day: foods to cover a macro target ----
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+
+  function renderFood(macro) {
+    var group = FOODS[macro];
+    var target = Math.round(targets[macro] || 0);
+    var list = $("foodList");
+    var html = "";
+    for (var i = 0; i < group.items.length; i++) {
+      var f = group.items[i];
+      var count = target > 0 ? Math.max(1, Math.round(target / f.val)) : 0;
+      var badge = target > 0
+        ? '<div class="food-count">×' + count + ' for ' + target + 'g</div>'
+        : "";
+      html +=
+        '<div class="food-row">' +
+          '<div class="food-emoji">' + f.emoji + '</div>' +
+          '<div class="food-main">' +
+            '<div class="food-name">' + esc(f.name) + '</div>' +
+            '<div class="food-portion">' + esc(f.portion) + '</div>' +
+          '</div>' +
+          '<div class="food-right">' +
+            '<div class="food-val" style="color:' + group.color + '">' + f.val + 'g</div>' +
+            badge +
+          '</div>' +
+        '</div>';
+    }
+    list.innerHTML = html;
+    $("fuelSub").innerHTML = 'Hit your <strong>' + target + 'g of ' + group.label +
+      '</strong> — the count shows how many of each portion that takes on its own.';
+    $("foodNote").innerHTML = "You won't eat one food to the whole number — <strong>spread 3–4 sources across your meals</strong> and the totals add up.";
+  }
+
+  // ---- Move to Burn It: kcal for 30 min at bodyweight ----
+  function renderBurn(kg) {
+    var half = 0.5; // 30 min in hours
+    var rows = ACTIVITIES.map(function (a) {
+      return { a: a, kcal: Math.round(a.met * kg * half) };
+    });
+    var max = rows.reduce(function (m, r) { return Math.max(m, r.kcal); }, 1);
+    var html = "";
+    for (var i = 0; i < rows.length; i++) {
+      var r = rows[i];
+      var pct = Math.round(r.kcal / max * 100);
+      html +=
+        '<div class="burn-row">' +
+          '<div class="burn-emoji">' + r.a.emoji + '</div>' +
+          '<div class="burn-body">' +
+            '<div class="burn-head">' +
+              '<span class="burn-name">' + esc(r.a.name) + '</span>' +
+              '<span class="burn-kcal">' + r.kcal + ' <span>kcal</span></span>' +
+            '</div>' +
+            '<div class="burn-track"><div class="burn-fill" style="width:' + pct + '%"></div></div>' +
+          '</div>' +
+        '</div>';
+    }
+    $("burnList").innerHTML = html;
+  }
+
+  // ---- Keep Going: resource links (rendered once) ----
+  function renderLinks() {
+    var html = "";
+    for (var i = 0; i < LINKS.length; i++) {
+      var l = LINKS[i];
+      html +=
+        '<a class="link-card" href="' + l.url + '" target="_blank" rel="noopener noreferrer">' +
+          '<span class="link-emoji">' + l.emoji + '</span>' +
+          '<span class="link-body">' +
+            '<span class="link-name">' + esc(l.name) + '</span>' +
+            '<span class="link-desc">' + esc(l.desc) + '</span>' +
+          '</span>' +
+          '<span class="link-arrow">›</span>' +
+        '</a>';
+    }
+    $("linkList").innerHTML = html;
   }
 
   // pathLength is 100, so dashes are in "percent of circumference"
@@ -685,6 +977,18 @@
     $(id).addEventListener("input", calc);
   });
 
+  // ---- Macro food tabs ----
+  $("macroTabs").addEventListener("click", function (e) {
+    var btn = e.target.closest("button");
+    if (!btn) return;
+    activeMacro = btn.getAttribute("data-m");
+    Array.prototype.forEach.call(this.querySelectorAll("button"), function (b) {
+      b.classList.toggle("active", b === btn);
+    });
+    renderFood(activeMacro);
+  });
+
+  renderLinks();
   calc();
 })();
 

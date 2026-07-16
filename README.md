@@ -30,6 +30,12 @@ computes daily fat-loss nutrition targets from just **weight** and **height**.
 **Beyond the formula (the "useful expansion"):**
 - Macro calorie-distribution ring (protein / fat / carbs %)
 - BMI, category, and a healthy-weight range for the entered height
+- **Fuel Your Day** — real foods per macro, with how many portions of each
+  it takes to hit *your* protein / carb / fat / fiber target
+- **Move to Burn It** — a fat-loss training strategy plus calories burned in
+  30 min for 11 activities, scaled to your bodyweight (MET-based)
+- **Keep Going** — curated links to trusted trackers & guides (Cronometer,
+  USDA FoodData Central, Examine, NHS, CDC, r/fitness wiki)
 - kg/lb and cm/ft-in unit toggles, live updating, light & dark mode
 
 **Run it locally:** open `index.html` in any browser (or `npx http-server .`).
