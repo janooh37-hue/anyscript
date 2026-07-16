@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#000000" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<title>Macro Calculator</title>
+<style>
+  :root {
+    --accent: #0a84ff;
+    --accent-2: #64d2ff;
+    --protein: #ff375f;
+    --fat: #ffd60a;
+    --fiber: #30d158;
+    --carbs: #bf5af2;
+    --cal: #ff9f0a;
+    --text: #ffffff;
+    --text-dim: rgba(235, 235, 245, 0.6);
+    --text-dimmer: rgba(235, 235, 245, 0.35);
+    --glass-bg: rgba(40, 40, 45, 0.55);
+    --glass-border: rgba(255, 255, 255, 0.14);
+    --glass-hi: rgba(255, 255, 255, 0.28);
+    --field-bg: rgba(120, 120, 128, 0.24);
+    --seg-bg: rgba(120, 120, 128, 0.24);
+    --seg-active: rgba(99, 99, 105, 0.9);
+    --radius-xl: 30px;
+    --radius-lg: 22px;
+    --radius-md: 16px;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      --text: #1c1c1e;
+      --text-dim: rgba(60, 60, 67, 0.6);
+      --text-dimmer: rgba(60, 60, 67, 0.35);
+      --glass-bg: rgba(255, 255, 255, 0.55);
+      --glass-border: rgba(255, 255, 255, 0.7);
+      --glass-hi: rgba(255, 255, 255, 0.9);
+      --field-bg: rgba(120, 120, 128, 0.12);
+      --seg-bg: rgba(120, 120, 128, 0.16);
+      --seg-active: rgba(255, 255, 255, 0.95);
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body { height: 100%; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+    color: var(--text);
+    background: #000;
+    min-height: 100%;
+    overflow-x: hidden;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Ambient animated background — the "liquid" underlay the glass floats on */
+  .bg {
+    position: fixed;
+    inset: -20vmax;
+    z-index: -2;
+    background:
+      radial-gradient(42vmax 42vmax at 18% 12%, rgba(10, 132, 255, 0.55), transparent 60%),
+      radial-gradient(40vmax 40vmax at 85% 8%, rgba(191, 90, 242, 0.5), transparent 60%),
+      radial-gradient(46vmax 46vmax at 78% 88%, rgba(255, 55, 95, 0.42), transparent 62%),
+      radial-gradient(44vmax 44vmax at 12% 92%, rgba(48, 209, 88, 0.4), transparent 60%),
+      radial-gradient(50vmax 50vmax at 50% 50%, rgba(255, 159, 10, 0.3), transparent 65%);
+    filter: saturate(1.2);
+    animation: drift 26s ease-in-out infinite alternate;
+  }
+  @media (prefers-color-scheme: light) {
+    body { background: #eef1f6; }
+    .bg { filter: saturate(1.15) brightness(1.15); opacity: 0.9; }
+  }
+
+  @keyframes drift {
+    0%   { transform: translate3d(0,0,0) scale(1) rotate(0deg); }
+    50%  { transform: translate3d(2%, -2%, 0) scale(1.08) rotate(4deg); }
+    100% { transform: translate3d(-2%, 2%, 0) scale(1.04) rotate(-3deg); }
+  }
+
+  .grain {
+    position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .app {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: calc(var(--safe-top) + 22px) 18px calc(var(--safe-bottom) + 40px);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Header */
+  header { text-align: center; padding: 6px 0 4px; }
+  .eyebrow {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 6px;
+  }
+  h1 {
+    font-size: 34px; font-weight: 800; letter-spacing: -0.6px; line-height: 1.05;
+    background: linear-gradient(180deg, var(--text), var(--text-dim));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .subtitle { font-size: 15px; color: var(--text-dim); margin-top: 8px; font-weight: 450; }
+
+  /* Glass card */
+  .card {
+    position: relative;
+    background: var(--glass-bg);
+    border-radius: var(--radius-xl);
+    border: 0.5px solid var(--glass-border);
+    -webkit-backdrop-filter: blur(30px) saturate(1.8);
+    backdrop-filter: blur(30px) saturate(1.8);
+    box-shadow:
+      0 1px 0 var(--glass-hi) inset,
+      0 12px 40px rgba(0, 0, 0, 0.35),
+      0 2px 8px rgba(0, 0, 0, 0.2);
+    padding: 22px;
+    overflow: hidden;
+  }
+  /* specular top-edge highlight */
+  .card::before {
+    content: ""; position: absolute; top: 0; left: 8%; right: 8%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--glass-hi), transparent);
+    opacity: 0.8;
+  }
+
+  .card-title {
+    font-size: 13px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 16px;
+  }
+
+  /* Segmented control */
+  .field-row { display: flex; flex-direction: column; gap: 10px; }
+  .field-row + .field-row { margin-top: 18px; }
+
+  .field-head { display: flex; align-items: center; justify-content: space-between; }
+  .field-label { font-size: 16px; font-weight: 600; }
+
+  .segment {
+    display: inline-flex; padding: 2px; gap: 2px;
+    background: var(--seg-bg); border-radius: 10px;
+  }
+  .segment button {
+    border: none; background: transparent; color: var(--text-dim);
+    font-size: 13px; font-weight: 600; padding: 5px 12px; border-radius: 8px;
+    cursor: pointer; transition: color 0.2s; font-family: inherit; min-width: 44px;
+  }
+  .segment button.active {
+    color: var(--text);
+    background: var(--seg-active);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 0.5px 0 var(--glass-hi) inset;
+  }
+
+  /* Input fields */
+  .input-wrap {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--field-bg); border-radius: var(--radius-md);
+    padding: 4px 16px; transition: box-shadow 0.2s, background 0.2s;
+    border: 0.5px solid transparent;
+  }
+  .input-wrap:focus-within {
+    box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.35);
+    border-color: rgba(10,132,255,0.5);
+  }
+  .input-wrap input {
+    flex: 1; width: 100%; border: none; background: transparent; outline: none;
+    color: var(--text); font-size: 30px; font-weight: 700; padding: 12px 0;
+    font-family: inherit; letter-spacing: -0.5px;
+  }
+  .input-wrap input::placeholder { color: var(--text-dimmer); font-weight: 600; }
+  .input-wrap .unit { font-size: 16px; font-weight: 600; color: var(--text-dim); white-space: nowrap; }
+
+  /* Dual field for ft/in */
+  .dual { display: flex; gap: 10px; }
+  .dual .input-wrap { flex: 1; }
+
+  /* Results */
+  #results { display: flex; flex-direction: column; gap: 16px; }
+  #results.hidden { display: none; }
+
+  /* Calories hero */
+  .cal-hero { text-align: center; padding: 8px 0 4px; }
+  .cal-hero .label { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-dim); }
+  .cal-value {
+    font-size: 64px; font-weight: 800; letter-spacing: -2px; line-height: 1.1; margin: 4px 0;
+    font-variant-numeric: tabular-nums;
+    background: linear-gradient(180deg, var(--cal), #ff7a00);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .cal-hero .sub { font-size: 14px; color: var(--text-dim); font-weight: 500; }
+
+  /* Macro ring + legend */
+  .macro-layout { display: flex; align-items: center; gap: 20px; }
+  .ring {
+    position: relative; width: 132px; height: 132px; flex-shrink: 0;
+    border-radius: 50%;
+  }
+  .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .ring .center {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center;
+  }
+  .ring .center .big { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; font-variant-numeric: tabular-nums; }
+  .ring .center .small { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dim); }
+
+  .legend { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+  .legend-item { display: flex; align-items: center; gap: 10px; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 8px currentColor; }
+  .legend-item .name { font-size: 14px; font-weight: 600; flex: 1; }
+  .legend-item .grams { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .legend-item .pct { font-size: 12px; color: var(--text-dim); width: 38px; text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* Macro detail tiles */
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .tile {
+    background: var(--field-bg); border-radius: var(--radius-md); padding: 14px 16px;
+    border: 0.5px solid var(--glass-border);
+    display: flex; flex-direction: column; gap: 3px;
+    position: relative; overflow: hidden;
+  }
+  .tile .tname { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: var(--text-dim); display: flex; align-items: center; gap: 6px; }
+  .tile .tval { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; font-variant-numeric: tabular-nums; }
+  .tile .tval span { font-size: 14px; font-weight: 600; color: var(--text-dim); }
+  .tile .tnote { font-size: 11px; color: var(--text-dim); line-height: 1.3; margin-top: 2px; }
+  .tile::after { content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background: var(--tile-c); }
+
+  /* Body composition (BMI) */
+  .bmi-top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+  .bmi-val { font-size: 40px; font-weight: 800; letter-spacing: -1px; font-variant-numeric: tabular-nums; }
+  .bmi-cat { font-size: 15px; font-weight: 700; padding: 5px 12px; border-radius: 20px; }
+  .bmi-scale {
+    position: relative; height: 10px; border-radius: 6px; margin: 6px 0 10px;
+    background: linear-gradient(90deg, #0a84ff 0%, #30d158 33%, #ffd60a 62%, #ff9f0a 78%, #ff375f 100%);
+  }
+  .bmi-marker {
+    position: absolute; top: 50%; width: 18px; height: 18px; border-radius: 50%;
+    background: #fff; border: 3px solid rgba(0,0,0,0.25);
+    transform: translate(-50%, -50%); transition: left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  }
+  .bmi-ticks { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim); font-weight: 600; }
+  .bmi-note { font-size: 13px; color: var(--text-dim); margin-top: 12px; line-height: 1.4; }
+  .bmi-note strong { color: var(--text); font-weight: 700; }
+
+  /* Empty state */
+  .empty {
+    text-align: center; padding: 30px 20px; color: var(--text-dim);
+  }
+  .empty .icon { font-size: 40px; margin-bottom: 8px; opacity: 0.6; }
+  .empty p { font-size: 15px; font-weight: 500; }
+
+  /* Disclaimer */
+  .foot { text-align: center; font-size: 12px; color: var(--text-dimmer); line-height: 1.5; padding: 0 12px; }
+
+  /* entrance animation */
+  .reveal { animation: reveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  @keyframes reveal { from { opacity: 0; transform: translateY(14px) scale(0.98); } to { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="grain"></div>
+
+  <div class="app">
+    <header>
+      <div class="eyebrow">Fat-Loss Nutrition</div>
+      <h1>Macro Calculator</h1>
+      <p class="subtitle">Enter your weight &amp; height — get your daily calories, protein, fat, fiber &amp; carbs.</p>
+    </header>
+
+    <!-- Inputs -->
+    <section class="card">
+      <div class="card-title">Your Body</div>
+
+      <div class="field-row">
+        <div class="field-head">
+          <span class="field-label">Weight</span>
+          <div class="segment" id="weightUnit">
+            <button data-u="kg" class="active">kg</button>
+            <button data-u="lb">lb</button>
+          </div>
+        </div>
+        <div class="input-wrap">
+          <input id="weight" type="number" inputmode="decimal" placeholder="100" min="0" step="0.1" />
+          <span class="unit" id="weightUnitLabel">kg</span>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-head">
+          <span class="field-label">Height</span>
+          <div class="segment" id="heightUnit">
+            <button data-u="cm" class="active">cm</button>
+            <button data-u="ft">ft / in</button>
+          </div>
+        </div>
+        <div id="heightCm">
+          <div class="input-wrap">
+            <input id="heightCmInput" type="number" inputmode="decimal" placeholder="180" min="0" step="0.1" />
+            <span class="unit">cm</span>
+          </div>
+        </div>
+        <div id="heightFt" style="display:none">
+          <div class="dual">
+            <div class="input-wrap">
+              <input id="heightFtInput" type="number" inputmode="numeric" placeholder="5" min="0" step="1" />
+              <span class="unit">ft</span>
+            </div>
+            <div class="input-wrap">
+              <input id="heightInInput" type="number" inputmode="decimal" placeholder="11" min="0" step="0.1" />
+              <span class="unit">in</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <div id="empty" class="card empty">
+      <div class="icon">🍽️</div>
+      <p>Enter your weight to see your targets</p>
+    </div>
+
+    <div id="results" class="hidden">
+
+      <!-- Calories + macros -->
+      <section class="card">
+        <div class="cal-hero">
+          <div class="label">Daily Calories · Fat Loss</div>
+          <div class="cal-value" id="calValue">0</div>
+          <div class="sub">kcal / day</div>
+        </div>
+
+        <div class="macro-layout" style="margin-top:8px">
+          <div class="ring">
+            <svg viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(120,120,128,0.22)" stroke-width="14"/>
+              <circle id="arcProtein" cx="60" cy="60" r="52" fill="none" stroke="var(--protein)" stroke-width="14" stroke-linecap="round" pathLength="100"/>
+              <circle id="arcFat" cx="60" cy="60" r="52" fill="none" stroke="var(--fat)" stroke-width="14" stroke-linecap="round" pathLength="100"/>
+              <circle id="arcCarbs" cx="60" cy="60" r="52" fill="none" stroke="var(--carbs)" stroke-width="14" stroke-linecap="round" pathLength="100"/>
+            </svg>
+            <div class="center">
+              <div class="big" id="ringKcal">0</div>
+              <div class="small">kcal</div>
+            </div>
+          </div>
+          <div class="legend">
+            <div class="legend-item">
+              <span class="dot" style="color:var(--protein);background:var(--protein)"></span>
+              <span class="name">Protein</span>
+              <span class="grams" id="legProteinG">0g</span>
+              <span class="pct" id="legProteinP">0%</span>
+            </div>
+            <div class="legend-item">
+              <span class="dot" style="color:var(--fat);background:var(--fat)"></span>
+              <span class="name">Fat</span>
+              <span class="grams" id="legFatG">0g</span>
+              <span class="pct" id="legFatP">0%</span>
+            </div>
+            <div class="legend-item">
+              <span class="dot" style="color:var(--carbs);background:var(--carbs)"></span>
+              <span class="name">Carbs</span>
+              <span class="grams" id="legCarbsG">0g</span>
+              <span class="pct" id="legCarbsP">0%</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Macro tiles -->
+      <section class="card">
+        <div class="card-title">Daily Targets</div>
+        <div class="tiles">
+          <div class="tile" style="--tile-c:var(--protein)">
+            <div class="tname"><span class="dot" style="color:var(--protein);background:var(--protein)"></span>Protein</div>
+            <div class="tval" id="tileProtein">0<span>g</span></div>
+            <div class="tnote">Burns fat while keeping muscle</div>
+          </div>
+          <div class="tile" style="--tile-c:var(--fat)">
+            <div class="tname"><span class="dot" style="color:var(--fat);background:var(--fat)"></span>Fat</div>
+            <div class="tval" id="tileFat">0<span>g</span></div>
+            <div class="tnote">Supports hormones &amp; testosterone</div>
+          </div>
+          <div class="tile" style="--tile-c:var(--carbs)">
+            <div class="tname"><span class="dot" style="color:var(--carbs);background:var(--carbs)"></span>Carbs</div>
+            <div class="tval" id="tileCarbs">0<span>g</span></div>
+            <div class="tnote">Fuels workouts &amp; manages cortisol</div>
+          </div>
+          <div class="tile" style="--tile-c:var(--fiber)">
+            <div class="tname"><span class="dot" style="color:var(--fiber);background:var(--fiber)"></span>Fiber</div>
+            <div class="tval" id="tileFiber">0<span>g</span></div>
+            <div class="tnote">Digestion &amp; gut health</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Body composition (uses height) -->
+      <section class="card" id="bmiCard">
+        <div class="card-title">Body Composition</div>
+        <div class="bmi-top">
+          <div>
+            <div class="bmi-val" id="bmiVal">—</div>
+            <div style="font-size:12px;color:var(--text-dim);font-weight:600;margin-top:2px">Body Mass Index</div>
+          </div>
+          <div class="bmi-cat" id="bmiCat">—</div>
+        </div>
+        <div class="bmi-scale">
+          <div class="bmi-marker" id="bmiMarker" style="left:0%"></div>
+        </div>
+        <div class="bmi-ticks">
+          <span>15</span><span>18.5</span><span>25</span><span>30</span><span>40</span>
+        </div>
+        <div class="bmi-note" id="bmiNote">Add your height for BMI &amp; a healthy-weight range.</div>
+      </section>
+
+    </div>
+
+    <p class="foot">
+      Estimates only — a simple fat-loss starting point, not medical advice.
+      Track intake in an app like Cronometer and adjust to your results.
+    </p>
+  </div>
+
+<script>
+(function () {
+  "use strict";
+
+  var state = {
+    weightUnit: "kg", // kg | lb
+    heightUnit: "cm"  // cm | ft
+  };
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  // ---- Unit toggles ----
+  function bindSegment(containerId, key, onChange) {
+    var seg = $(containerId);
+    seg.addEventListener("click", function (e) {
+      var btn = e.target.closest("button");
+      if (!btn) return;
+      Array.prototype.forEach.call(seg.querySelectorAll("button"), function (b) {
+        b.classList.toggle("active", b === btn);
+      });
+      state[key] = btn.getAttribute("data-u");
+      onChange();
+      calc();
+    });
+  }
+
+  bindSegment("weightUnit", "weightUnit", function () {
+    $("weightUnitLabel").textContent = state.weightUnit;
+  });
+
+  bindSegment("heightUnit", "heightUnit", function () {
+    var isCm = state.heightUnit === "cm";
+    $("heightCm").style.display = isCm ? "" : "none";
+    $("heightFt").style.display = isCm ? "none" : "";
+  });
+
+  // ---- Read inputs ----
+  function num(id) {
+    var v = parseFloat($(id).value);
+    return isNaN(v) || v < 0 ? null : v;
+  }
+
+  function getWeightKg() {
+    var w = num("weight");
+    if (w === null) return null;
+    return state.weightUnit === "kg" ? w : w / 2.2046226218;
+  }
+
+  function getHeightCm() {
+    if (state.heightUnit === "cm") {
+      return num("heightCmInput");
+    }
+    var ft = num("heightFtInput");
+    var inch = num("heightInInput");
+    if (ft === null && inch === null) return null;
+    var totalIn = (ft || 0) * 12 + (inch || 0);
+    if (totalIn <= 0) return null;
+    return totalIn * 2.54;
+  }
+
+  // ---- Animated number counter ----
+  function animateNumber(el, to, opts) {
+    opts = opts || {};
+    var decimals = opts.decimals || 0;
+    var suffix = opts.suffix || "";
+    var from = parseFloat(el.getAttribute("data-val")) || 0;
+    var start = null;
+    var dur = 600;
+    function fmt(v) {
+      var s = decimals ? v.toFixed(decimals) : Math.round(v).toLocaleString("en-US");
+      return s + suffix;
+    }
+    function frame(ts) {
+      if (start === null) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      var val = from + (to - from) * eased;
+      el.textContent = fmt(val);
+      if (p < 1) requestAnimationFrame(frame);
+      else el.setAttribute("data-val", to);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  // ---- The formula ----
+  function calc() {
+    var kg = getWeightKg();
+    var results = $("results");
+    var empty = $("empty");
+
+    if (kg === null || kg <= 0) {
+      results.classList.add("hidden");
+      empty.style.display = "";
+      return;
+    }
+    empty.style.display = "none";
+    var wasHidden = results.classList.contains("hidden");
+    results.classList.remove("hidden");
+    if (wasHidden) {
+      results.classList.remove("reveal");
+      void results.offsetWidth;
+      results.classList.add("reveal");
+    }
+
+    // Step 1: bodyweight in pounds. If they entered lb, use it directly
+    // (the formula's "kg x 2.2" is just the conversion to that same number).
+    var lbs = state.weightUnit === "lb" ? num("weight") : kg * 2.2;
+    // Step 2: total calories
+    var calories = lbs * 10;
+    // Step 3: protein (g) — bodyweight(lb) x 0.8, i.e. calories x 0.08 (220 -> 176g)
+    var protein = calories * 0.08;
+    // Step 4: fat (g) — bodyweight(lb) x 0.3, i.e. calories x 0.03 (220 -> 66g)
+    var fat = calories * 0.03;
+    // Step 5: fiber (g)
+    var fiber = calories / 1000 * 14;
+    // Step 6: carbs (g)
+    var proteinCals = protein * 4;
+    var fatCals = fat * 9;
+    var carbs = (calories - (proteinCals + fatCals)) / 4;
+
+    // guard against negative carbs (extreme edge cases)
+    var carbsClamped = Math.max(carbs, 0);
+    var carbCals = carbsClamped * 4;
+
+    // ---- Render calories ----
+    animateNumber($("calValue"), calories);
+    animateNumber($("ringKcal"), calories);
+
+    // ---- Render macro tiles ----
+    setTileGrams($("tileProtein"), protein);
+    setTileGrams($("tileFat"), fat);
+    setTileGrams($("tileCarbs"), carbsClamped);
+    setTileGrams($("tileFiber"), fiber);
+
+    // ---- Ring: distribution of CALORIES among the 3 energy macros ----
+    var totalMacroCals = proteinCals + fatCals + carbCals;
+    var pP = totalMacroCals ? proteinCals / totalMacroCals * 100 : 0;
+    var pF = totalMacroCals ? fatCals / totalMacroCals * 100 : 0;
+    var pC = totalMacroCals ? carbCals / totalMacroCals * 100 : 0;
+    setRing(pP, pF, pC);
+
+    $("legProteinG").textContent = Math.round(protein) + "g";
+    $("legFatG").textContent = Math.round(fat) + "g";
+    $("legCarbsG").textContent = Math.round(carbsClamped) + "g";
+    $("legProteinP").textContent = Math.round(pP) + "%";
+    $("legFatP").textContent = Math.round(pF) + "%";
+    $("legCarbsP").textContent = Math.round(pC) + "%";
+
+    // ---- Body composition (needs height) ----
+    renderBMI(kg, getHeightCm());
+  }
+
+  function setTileGrams(el, grams) {
+    el.innerHTML = Math.round(grams) + "<span>g</span>";
+  }
+
+  // pathLength is 100, so dashes are in "percent of circumference"
+  function setRing(pP, pF, pC) {
+    var gap = 1.2; // small visual gap between segments
+    function seg(el, pct, offsetStart) {
+      var len = Math.max(pct - gap, 0);
+      el.style.strokeDasharray = len + " " + (100 - len);
+      // dashoffset shifts start point backward
+      el.style.strokeDashoffset = (-offsetStart) % 100;
+      el.style.transition = "stroke-dasharray 0.7s cubic-bezier(0.22,1,0.36,1), stroke-dashoffset 0.7s cubic-bezier(0.22,1,0.36,1)";
+    }
+    seg($("arcProtein"), pP, 0);
+    seg($("arcFat"), pF, pP);
+    seg($("arcCarbs"), pC, pP + pF);
+  }
+
+  var BMI_CATS = [
+    { max: 18.5, name: "Underweight", color: "#0a84ff" },
+    { max: 25,   name: "Healthy",     color: "#30d158" },
+    { max: 30,   name: "Overweight",  color: "#ff9f0a" },
+    { max: 999,  name: "Obese",       color: "#ff375f" }
+  ];
+
+  function renderBMI(kg, cm) {
+    var card = $("bmiCard");
+    if (cm === null || cm <= 0) {
+      $("bmiVal").textContent = "—";
+      $("bmiCat").textContent = "Add height";
+      $("bmiCat").style.background = "var(--field-bg)";
+      $("bmiCat").style.color = "var(--text-dim)";
+      $("bmiMarker").style.left = "0%";
+      $("bmiNote").innerHTML = "Add your height for BMI &amp; a healthy-weight range.";
+      return;
+    }
+    var m = cm / 100;
+    var bmi = kg / (m * m);
+
+    var cat = BMI_CATS[0];
+    for (var i = 0; i < BMI_CATS.length; i++) {
+      if (bmi < BMI_CATS[i].max) { cat = BMI_CATS[i]; break; }
+    }
+
+    animateNumber($("bmiVal"), bmi, { decimals: 1 });
+    var catEl = $("bmiCat");
+    catEl.textContent = cat.name;
+    catEl.style.background = hexA(cat.color, 0.18);
+    catEl.style.color = cat.color;
+
+    // marker position across scale 15 -> 40 (clamped)
+    var pos = (Math.min(Math.max(bmi, 15), 40) - 15) / (40 - 15) * 100;
+    $("bmiMarker").style.left = pos + "%";
+
+    // healthy weight range for this height (BMI 18.5–24.9)
+    var lowKg = 18.5 * m * m;
+    var highKg = 24.9 * m * m;
+    var isLb = state.weightUnit === "lb";
+    var conv = isLb ? 2.2046226218 : 1;
+    var unit = isLb ? "lb" : "kg";
+    var lo = Math.round(lowKg * conv);
+    var hi = Math.round(highKg * conv);
+    var curW = Math.round(kg * conv);
+
+    var msg;
+    if (bmi >= 18.5 && bmi < 25) {
+      msg = "You're in the <strong>healthy range</strong> for your height (" + lo + "–" + hi + " " + unit + ").";
+    } else if (bmi >= 25) {
+      var over = Math.round((kg - highKg) * conv);
+      msg = "A healthy weight for your height is <strong>" + lo + "–" + hi + " " + unit + "</strong> — about <strong>" + over + " " + unit + "</strong> below where you are now.";
+    } else {
+      var under = Math.round((lowKg - kg) * conv);
+      msg = "A healthy weight for your height is <strong>" + lo + "–" + hi + " " + unit + "</strong> — about <strong>" + under + " " + unit + "</strong> above where you are now.";
+    }
+    $("bmiNote").innerHTML = msg;
+  }
+
+  function hexA(hex, a) {
+    var h = hex.replace("#", "");
+    var r = parseInt(h.substring(0, 2), 16);
+    var g = parseInt(h.substring(2, 4), 16);
+    var b = parseInt(h.substring(4, 6), 16);
+    return "rgba(" + r + "," + g + "," + b + "," + a + ")";
+  }
+
+  // ---- Wire up live inputs ----
+  ["weight", "heightCmInput", "heightFtInput", "heightInInput"].forEach(function (id) {
+    $(id).addEventListener("input", calc);
+  });
+
+  calc();
+})();
+</script>
+</body>
+</html>
