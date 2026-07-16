@@ -1,5 +1,5 @@
 /* Macro Calculator — offline app shell */
-var CACHE = "macros-v2";
+var CACHE = "macros-v3";
 var ASSETS = [
   ".",
   "index.html",

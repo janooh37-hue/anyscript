@@ -357,6 +357,137 @@
   .link-desc { display: block; font-size: 12.5px; color: var(--text-dim); margin-top: 1px; }
   .link-arrow { color: var(--text-dimmer); font-size: 18px; flex-shrink: 0; }
 
+  /* Primary CTA button */
+  .cta-btn {
+    width: 100%; margin-top: 20px; border: none; cursor: pointer;
+    font-family: inherit; font-size: 17px; font-weight: 700; color: #fff;
+    padding: 16px; border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: linear-gradient(180deg, #0a84ff, #0060df);
+    box-shadow: 0 6px 18px rgba(10,132,255,0.4), 0 1px 0 rgba(255,255,255,0.3) inset;
+    transition: transform 0.12s, box-shadow 0.2s, opacity 0.2s;
+  }
+  .cta-btn:active { transform: scale(0.975); box-shadow: 0 3px 10px rgba(10,132,255,0.35); }
+  .cta-btn:disabled { opacity: 0.5; box-shadow: none; cursor: default; }
+  .cta-btn .cta-arrow { font-size: 18px; transition: transform 0.2s; }
+  .cta-btn:not(:disabled):active .cta-arrow { transform: translateX(3px); }
+  .cta-btn.stale { animation: pulseBtn 1.4s ease-in-out infinite; }
+  @keyframes pulseBtn { 0%,100% { box-shadow: 0 6px 18px rgba(10,132,255,0.4); } 50% { box-shadow: 0 6px 26px rgba(10,132,255,0.75); } }
+  .calc-hint { text-align: center; font-size: 12.5px; color: var(--text-dim); margin-top: 10px; min-height: 16px; }
+
+  /* Taste teaser */
+  .taste-teaser { text-align: center; margin-top: 8px; }
+  .tt-emojis { font-size: 26px; letter-spacing: 2px; margin-bottom: 14px; filter: saturate(1.1); }
+
+  /* Profile banner */
+  .profile-banner {
+    display: flex; align-items: center; gap: 14px; padding: 14px 16px; margin-bottom: 14px;
+    border-radius: var(--radius-md); border: 0.5px solid var(--glass-border);
+    background: linear-gradient(135deg, rgba(10,132,255,0.18), rgba(191,90,242,0.18));
+  }
+  .profile-banner .pb-emoji { font-size: 30px; flex-shrink: 0; }
+  .profile-banner .pb-body { flex: 1; min-width: 0; }
+  .profile-banner .pb-kicker { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-dim); }
+  .profile-banner .pb-name { font-size: 18px; font-weight: 800; letter-spacing: -0.3px; }
+  .profile-banner .pb-desc { font-size: 12.5px; color: var(--text-dim); margin-top: 2px; line-height: 1.35; }
+
+  .redo-link {
+    display: block; margin: 16px auto 0; background: none; border: none; cursor: pointer;
+    font-family: inherit; font-size: 13px; font-weight: 600; color: var(--accent);
+  }
+
+  /* "For you" favorite badge on food rows */
+  .food-fav { position: relative; }
+  .food-fav .food-emoji { box-shadow: 0 0 0 2px var(--accent), 0 0 12px rgba(10,132,255,0.4); }
+  .fav-tag {
+    display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: 0.3px;
+    color: #fff; background: linear-gradient(135deg, #0a84ff, #bf5af2);
+    padding: 1px 7px; border-radius: 20px; margin-left: 8px; vertical-align: middle;
+  }
+
+  /* Hydration */
+  .water-layout { display: flex; align-items: center; gap: 18px; margin-bottom: 18px; }
+  .water-ring { position: relative; width: 128px; height: 128px; flex-shrink: 0; }
+  .water-ring svg { width: 100%; height: 100%; }
+  .water-ring .center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .water-ring .big { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; font-variant-numeric: tabular-nums; }
+  .water-ring .big span { font-size: 14px; font-weight: 700; color: var(--text-dim); }
+  .water-ring .small { font-size: 11px; font-weight: 600; color: var(--text-dim); margin-top: 1px; }
+  .water-side { flex: 1; min-width: 0; }
+  .water-pct { font-size: 34px; font-weight: 800; letter-spacing: -1px; font-variant-numeric: tabular-nums; background: linear-gradient(180deg, #64d2ff, #0a84ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .water-msg { font-size: 13.5px; color: var(--text-dim); margin-top: 4px; line-height: 1.4; }
+  .water-btns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .water-add {
+    display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer;
+    font-family: inherit; padding: 12px 6px; border-radius: var(--radius-md);
+    background: var(--field-bg); border: 0.5px solid var(--glass-border); color: var(--text);
+    transition: transform 0.12s, background 0.2s;
+  }
+  .water-add:active { transform: scale(0.95); background: rgba(10,132,255,0.18); }
+  .water-add span { font-size: 13px; font-weight: 700; }
+  .water-add em { font-size: 11px; font-style: normal; color: var(--text-dim); }
+  .water-add { font-size: 20px; } /* sizes the leading emoji; span/em reset below it */
+  .water-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; }
+  .water-undo { background: none; border: none; font-family: inherit; font-size: 13px; font-weight: 600; color: var(--accent); cursor: pointer; }
+  .water-undo:disabled { color: var(--text-dimmer); cursor: default; }
+  .water-count { font-size: 12.5px; color: var(--text-dim); font-weight: 600; }
+
+  /* Bottom sheet (quiz) */
+  .sheet-scrim {
+    position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,0.5);
+    -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+    opacity: 0; pointer-events: none; transition: opacity 0.28s ease;
+    display: flex; align-items: flex-end; justify-content: center;
+  }
+  .sheet-scrim.open { opacity: 1; pointer-events: auto; }
+  .sheet {
+    width: 100%; max-width: 480px; max-height: 92vh; overflow-y: auto;
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(40px) saturate(1.8); backdrop-filter: blur(40px) saturate(1.8);
+    border: 0.5px solid var(--glass-border); border-bottom: none;
+    border-radius: 28px 28px 0 0;
+    box-shadow: 0 -12px 40px rgba(0,0,0,0.4), 0 1px 0 var(--glass-hi) inset;
+    padding: 8px 20px calc(var(--safe-bottom) + 24px);
+    transform: translateY(100%); transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .sheet-scrim.open .sheet { transform: translateY(0); }
+  .sheet-grab { width: 40px; height: 5px; border-radius: 3px; background: var(--text-dimmer); margin: 8px auto 6px; }
+  .sheet-head { display: flex; align-items: center; gap: 14px; padding: 6px 0 16px; }
+  .sheet-progress { flex: 1; height: 6px; border-radius: 4px; background: var(--field-bg); overflow: hidden; }
+  .sheet-progress-fill { height: 100%; width: 0; border-radius: 4px; background: linear-gradient(90deg, #0a84ff, #bf5af2); transition: width 0.35s cubic-bezier(0.22,1,0.36,1); }
+  .sheet-close { background: var(--field-bg); border: none; width: 30px; height: 30px; border-radius: 50%; color: var(--text-dim); font-size: 14px; cursor: pointer; flex-shrink: 0; }
+
+  /* Quiz question */
+  .q-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--accent); }
+  .q-title { font-size: 23px; font-weight: 800; letter-spacing: -0.4px; line-height: 1.15; margin: 6px 0 20px; }
+  .q-options { display: flex; flex-direction: column; gap: 12px; }
+  .q-opt {
+    display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; cursor: pointer;
+    font-family: inherit; color: var(--text);
+    padding: 15px 16px; border-radius: var(--radius-md);
+    background: var(--field-bg); border: 1.5px solid transparent;
+    transition: transform 0.12s, border-color 0.15s, background 0.15s;
+  }
+  .q-opt:active { transform: scale(0.98); }
+  .q-opt.selected { border-color: var(--accent); background: rgba(10,132,255,0.14); }
+  .q-opt .qo-emoji { font-size: 24px; flex-shrink: 0; }
+  .q-opt .qo-text { font-size: 15.5px; font-weight: 600; line-height: 1.3; }
+  .q-nav { display: flex; gap: 12px; margin-top: 22px; }
+  .q-back {
+    flex-shrink: 0; background: var(--field-bg); border: none; font-family: inherit;
+    font-size: 15px; font-weight: 600; color: var(--text); padding: 14px 20px; border-radius: var(--radius-md); cursor: pointer;
+  }
+  .q-back:disabled { opacity: 0.4; cursor: default; }
+
+  /* Quiz result */
+  .qr-wrap { text-align: center; padding: 8px 0 4px; }
+  .qr-emoji { font-size: 60px; line-height: 1; animation: reveal 0.5s cubic-bezier(0.22,1,0.36,1) both; }
+  .qr-kicker { font-size: 12px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-dim); margin-top: 14px; }
+  .qr-name { font-size: 30px; font-weight: 800; letter-spacing: -0.5px; margin: 4px 0 10px; }
+  .qr-desc { font-size: 15px; color: var(--text-dim); line-height: 1.5; padding: 0 6px; }
+  .qr-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 18px 0 4px; }
+  .qr-tag { font-size: 13px; font-weight: 600; padding: 6px 13px; border-radius: 20px; background: var(--field-bg); border: 0.5px solid var(--glass-border); }
+
   /* entrance animation */
   .reveal { animation: reveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
   @keyframes reveal { from { opacity: 0; transform: translateY(14px) scale(0.98); } to { opacity: 1; transform: none; } }
@@ -418,12 +549,18 @@
           </div>
         </div>
       </div>
+
+      <button id="calcBtn" class="cta-btn" type="button">
+        <span class="cta-label">Calculate My Plan</span>
+        <span class="cta-arrow">→</span>
+      </button>
+      <p class="calc-hint" id="calcHint">Enter your weight to begin.</p>
     </section>
 
     <!-- Results -->
     <div id="empty" class="card empty">
       <div class="icon">🍽️</div>
-      <p>Enter your weight to see your targets</p>
+      <p>Your plan appears here once you calculate.</p>
     </div>
 
     <div id="results" class="hidden">
@@ -518,18 +655,72 @@
         <div class="bmi-note" id="bmiNote">Add your height for BMI &amp; a healthy-weight range.</div>
       </section>
 
-      <!-- Fuel Your Day — food to hit each macro -->
-      <section class="card">
-        <div class="card-title">Fuel Your Day</div>
-        <p class="card-sub" id="fuelSub">Real foods that cover your targets. Tap a macro to see how much of each it takes.</p>
-        <div class="macro-tabs" id="macroTabs">
-          <button data-m="protein" class="active"><span class="tabdot" style="background:var(--protein)"></span>Protein</button>
-          <button data-m="carbs"><span class="tabdot" style="background:var(--carbs)"></span>Carbs</button>
-          <button data-m="fat"><span class="tabdot" style="background:var(--fat)"></span>Fat</button>
-          <button data-m="fiber"><span class="tabdot" style="background:var(--fiber)"></span>Fiber</button>
+      <!-- Hydration — water target + tracker -->
+      <section class="card" id="waterCard">
+        <div class="card-title">Hydration</div>
+        <p class="card-sub">Fat loss runs on water — it curbs false hunger and helps your body flush what you burn.</p>
+        <div class="water-layout">
+          <div class="water-ring">
+            <svg viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(120,120,128,0.22)" stroke-width="13"/>
+              <circle id="waterArc" cx="60" cy="60" r="52" fill="none" stroke="url(#waterGrad)" stroke-width="13" stroke-linecap="round" pathLength="100" transform="rotate(-90 60 60)" stroke-dasharray="0 100"/>
+              <defs>
+                <linearGradient id="waterGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#64d2ff"/><stop offset="1" stop-color="#0a84ff"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="center">
+              <div class="big" id="waterDone">0</div>
+              <div class="small" id="waterGoalLabel">of 0 L</div>
+            </div>
+          </div>
+          <div class="water-side">
+            <div class="water-pct" id="waterPct">0%</div>
+            <div class="water-msg" id="waterMsg">Log a drink to start your day.</div>
+          </div>
         </div>
-        <div class="food-list" id="foodList"></div>
-        <p class="food-note" id="foodNote"></p>
+        <div class="water-btns">
+          <button class="water-add" data-ml="250" type="button">🥛<span>Glass</span><em>250 ml</em></button>
+          <button class="water-add" data-ml="500" type="button">🍶<span>Bottle</span><em>500 ml</em></button>
+          <button class="water-add" data-ml="750" type="button">🚰<span>Large</span><em>750 ml</em></button>
+        </div>
+        <div class="water-foot">
+          <button class="water-undo" id="waterUndo" type="button" disabled>↺ Undo</button>
+          <span class="water-count" id="waterCount"></span>
+        </div>
+      </section>
+
+      <!-- Fuel Your Day — personalized food -->
+      <section class="card" id="fuelCard">
+        <div class="card-title">Fuel Your Day</div>
+
+        <!-- State A: not personalized yet -->
+        <div id="fuelIntro">
+          <p class="card-sub">Instead of a generic food list, let's find what <strong>you'd</strong> actually eat. Answer a few quick lifestyle questions — no food quizzes, just you.</p>
+          <div class="taste-teaser">
+            <div class="tt-emojis">🍳&nbsp;🥑&nbsp;🍣&nbsp;🥩&nbsp;🫐</div>
+            <button id="startQuiz" class="cta-btn" type="button">
+              <span class="cta-label">Build my taste profile</span>
+              <span class="cta-arrow">✨</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- State B: personalized -->
+        <div id="fuelResult" style="display:none">
+          <div class="profile-banner" id="profileBanner"></div>
+          <p class="card-sub" id="fuelSub"></p>
+          <div class="macro-tabs" id="macroTabs">
+            <button data-m="protein" class="active"><span class="tabdot" style="background:var(--protein)"></span>Protein</button>
+            <button data-m="carbs"><span class="tabdot" style="background:var(--carbs)"></span>Carbs</button>
+            <button data-m="fat"><span class="tabdot" style="background:var(--fat)"></span>Fat</button>
+            <button data-m="fiber"><span class="tabdot" style="background:var(--fiber)"></span>Fiber</button>
+          </div>
+          <div class="food-list" id="foodList"></div>
+          <p class="food-note" id="foodNote"></p>
+          <button class="redo-link" id="redoQuiz" type="button">↺ Retake taste profile</button>
+        </div>
       </section>
 
       <!-- Move to Burn It — training + calories burned -->
@@ -562,6 +753,18 @@
     </p>
   </div>
 
+  <!-- Taste profile quiz (bottom sheet) -->
+  <div class="sheet-scrim" id="quizScrim" aria-hidden="true">
+    <div class="sheet" id="quizSheet" role="dialog" aria-modal="true" aria-label="Taste profile">
+      <div class="sheet-grab"></div>
+      <div class="sheet-head">
+        <div class="sheet-progress"><div class="sheet-progress-fill" id="quizProgress"></div></div>
+        <button class="sheet-close" id="quizClose" type="button" aria-label="Close">✕</button>
+      </div>
+      <div class="sheet-body" id="quizBody"><!-- questions / result injected here --></div>
+    </div>
+  </div>
+
 <script>
 (function () {
   "use strict";
@@ -574,67 +777,147 @@
   // Latest computed macro targets (grams) + which food tab is showing.
   var targets = { protein: 0, carbs: 0, fat: 0, fiber: 0 };
   var activeMacro = "protein";
+  var profile = null;      // taste profile: { weights:{axis:n}, key, archetype }
+  var lastKg = 0;          // bodyweight from the last successful calculation
+  var quizAnswers = [];    // in-progress quiz selections
+  var quizStep = 0;
+
+  // ---- Storage (safe: no-ops if unavailable, e.g. private mode) ----
+  var LS = {
+    get: function (k) { try { return JSON.parse(localStorage.getItem("macros:" + k)); } catch (e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem("macros:" + k, JSON.stringify(v)); } catch (e) {} },
+    del: function (k) { try { localStorage.removeItem("macros:" + k); } catch (e) {} }
+  };
+  function todayKey() {
+    var d = new Date();
+    return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+  }
 
   // ---- Data ----------------------------------------------------------------
 
   // Food sources: grams of the given macro per everyday portion.
+  // tags map each food to taste axes: meat, seafood, plant, dairy,
+  // convenience, wholefood, fitness, adventurous, comfort.
   var FOODS = {
     protein: {
       label: "protein",
       color: "var(--protein)",
       items: [
-        { emoji: "🍗", name: "Chicken breast", portion: "1 fillet · 170g", val: 53 },
-        { emoji: "🥩", name: "Lean beef", portion: "150g cooked", val: 39 },
-        { emoji: "🐟", name: "Canned tuna", portion: "1 can · 120g", val: 30 },
-        { emoji: "🥤", name: "Whey protein", portion: "1 scoop", val: 24 },
-        { emoji: "🥛", name: "Greek yogurt", portion: "1 cup · 170g", val: 17 },
-        { emoji: "🫘", name: "Lentils", portion: "1 cup cooked", val: 18 },
-        { emoji: "🧈", name: "Firm tofu", portion: "150g", val: 17 },
-        { emoji: "🥚", name: "Eggs", portion: "1 large", val: 6 }
+        { emoji: "🍗", name: "Chicken breast", portion: "1 fillet · 170g", val: 53, tags: ["meat","wholefood","fitness"] },
+        { emoji: "🥩", name: "Lean beef", portion: "150g cooked", val: 39, tags: ["meat","wholefood","comfort"] },
+        { emoji: "🐟", name: "Canned tuna", portion: "1 can · 120g", val: 30, tags: ["seafood","convenience","fitness"] },
+        { emoji: "🥤", name: "Whey protein", portion: "1 scoop", val: 24, tags: ["fitness","convenience"] },
+        { emoji: "🥛", name: "Greek yogurt", portion: "1 cup · 170g", val: 17, tags: ["dairy","convenience","fitness"] },
+        { emoji: "🫘", name: "Lentils", portion: "1 cup cooked", val: 18, tags: ["plant","wholefood","adventurous"] },
+        { emoji: "🧈", name: "Firm tofu", portion: "150g", val: 17, tags: ["plant","adventurous","fitness"] },
+        { emoji: "🥚", name: "Eggs", portion: "1 large", val: 6, tags: ["meat","wholefood","comfort"] }
       ]
     },
     carbs: {
       label: "carbs",
       color: "var(--carbs)",
       items: [
-        { emoji: "🍚", name: "Rice", portion: "1 cup cooked", val: 45 },
-        { emoji: "🍝", name: "Pasta", portion: "1 cup cooked", val: 43 },
-        { emoji: "🥔", name: "Potato", portion: "1 medium · 170g", val: 37 },
-        { emoji: "🍠", name: "Sweet potato", portion: "1 medium", val: 27 },
-        { emoji: "🍌", name: "Banana", portion: "1 medium", val: 27 },
-        { emoji: "🌾", name: "Oats", portion: "½ cup dry · 40g", val: 27 },
-        { emoji: "🍞", name: "Whole-grain bread", portion: "1 slice", val: 15 },
-        { emoji: "🫐", name: "Berries", portion: "1 cup", val: 17 }
+        { emoji: "🍚", name: "Rice", portion: "1 cup cooked", val: 45, tags: ["wholefood","comfort"] },
+        { emoji: "🍝", name: "Pasta", portion: "1 cup cooked", val: 43, tags: ["comfort","convenience"] },
+        { emoji: "🥔", name: "Potato", portion: "1 medium · 170g", val: 37, tags: ["wholefood","comfort"] },
+        { emoji: "🍠", name: "Sweet potato", portion: "1 medium", val: 27, tags: ["wholefood","plant","fitness"] },
+        { emoji: "🍌", name: "Banana", portion: "1 medium", val: 27, tags: ["convenience","plant","fitness"] },
+        { emoji: "🌾", name: "Oats", portion: "½ cup dry · 40g", val: 27, tags: ["wholefood","plant","fitness"] },
+        { emoji: "🍞", name: "Whole-grain bread", portion: "1 slice", val: 15, tags: ["convenience","comfort"] },
+        { emoji: "🫐", name: "Berries", portion: "1 cup", val: 17, tags: ["plant","adventurous","fitness"] }
       ]
     },
     fat: {
       label: "fat",
       color: "var(--fat)",
       items: [
-        { emoji: "🥑", name: "Avocado", portion: "½ fruit", val: 15 },
-        { emoji: "🫒", name: "Olive oil", portion: "1 tbsp", val: 14 },
-        { emoji: "🥜", name: "Almonds", portion: "1 oz · 28g", val: 14 },
-        { emoji: "🧈", name: "Peanut butter", portion: "1 tbsp", val: 8 },
-        { emoji: "🧀", name: "Cheese", portion: "1 slice · 28g", val: 9 },
-        { emoji: "🐟", name: "Salmon", portion: "100g", val: 13 },
-        { emoji: "🌰", name: "Chia seeds", portion: "2 tbsp", val: 9 },
-        { emoji: "🥚", name: "Egg yolk", portion: "1 large egg", val: 5 }
+        { emoji: "🥑", name: "Avocado", portion: "½ fruit", val: 15, tags: ["plant","wholefood","adventurous"] },
+        { emoji: "🫒", name: "Olive oil", portion: "1 tbsp", val: 14, tags: ["wholefood","plant"] },
+        { emoji: "🥜", name: "Almonds", portion: "1 oz · 28g", val: 14, tags: ["convenience","plant","fitness"] },
+        { emoji: "🧈", name: "Peanut butter", portion: "1 tbsp", val: 8, tags: ["convenience","comfort"] },
+        { emoji: "🧀", name: "Cheese", portion: "1 slice · 28g", val: 9, tags: ["dairy","comfort","convenience"] },
+        { emoji: "🐟", name: "Salmon", portion: "100g", val: 13, tags: ["seafood","wholefood","fitness"] },
+        { emoji: "🌰", name: "Chia seeds", portion: "2 tbsp", val: 9, tags: ["plant","fitness","adventurous"] },
+        { emoji: "🥚", name: "Egg yolk", portion: "1 large egg", val: 5, tags: ["meat","wholefood","comfort"] }
       ]
     },
     fiber: {
       label: "fiber",
       color: "var(--fiber)",
       items: [
-        { emoji: "🫘", name: "Black beans", portion: "1 cup cooked", val: 15 },
-        { emoji: "🫘", name: "Lentils", portion: "1 cup cooked", val: 16 },
-        { emoji: "🫐", name: "Raspberries", portion: "1 cup", val: 8 },
-        { emoji: "🥑", name: "Avocado", portion: "½ fruit", val: 7 },
-        { emoji: "🥦", name: "Broccoli", portion: "1 cup cooked", val: 5 },
-        { emoji: "🌰", name: "Chia seeds", portion: "2 tbsp", val: 10 },
-        { emoji: "🍎", name: "Apple", portion: "1 medium", val: 4 },
-        { emoji: "🌾", name: "Oats", portion: "½ cup dry · 40g", val: 4 }
+        { emoji: "🫘", name: "Black beans", portion: "1 cup cooked", val: 15, tags: ["plant","wholefood","comfort"] },
+        { emoji: "🫘", name: "Lentils", portion: "1 cup cooked", val: 16, tags: ["plant","wholefood","adventurous"] },
+        { emoji: "🫐", name: "Raspberries", portion: "1 cup", val: 8, tags: ["plant","adventurous"] },
+        { emoji: "🥑", name: "Avocado", portion: "½ fruit", val: 7, tags: ["plant","wholefood","adventurous"] },
+        { emoji: "🥦", name: "Broccoli", portion: "1 cup cooked", val: 5, tags: ["plant","wholefood"] },
+        { emoji: "🌰", name: "Chia seeds", portion: "2 tbsp", val: 10, tags: ["plant","fitness","adventurous"] },
+        { emoji: "🍎", name: "Apple", portion: "1 medium", val: 4, tags: ["convenience","plant"] },
+        { emoji: "🌾", name: "Oats", portion: "½ cup dry · 40g", val: 4, tags: ["wholefood","plant","fitness"] }
       ]
     }
+  };
+
+  // Taste quiz — indirect, lifestyle-based questions. Each option nudges
+  // taste axes; we never ask about a food directly.
+  var QUESTIONS = [
+    {
+      q: "Friday night, nothing planned. You'd rather…",
+      opts: [
+        { e: "🔥", t: "Fire up the grill and cook properly", w: { wholefood: 2, meat: 2 } },
+        { e: "🛋️", t: "Order in and put your feet up", w: { convenience: 2, comfort: 2 } },
+        { e: "🏋️", t: "Train, then a quick shake", w: { fitness: 2, convenience: 1 } },
+        { e: "🍜", t: "Try that new place across town", w: { adventurous: 2, seafood: 1 } }
+      ]
+    },
+    {
+      q: "Pick the holiday that pulls at you.",
+      opts: [
+        { e: "🥩", t: "Steakhouse & city lights", w: { meat: 2, comfort: 1 } },
+        { e: "🏝️", t: "Beach with fresh fish & fruit", w: { seafood: 2, plant: 1 } },
+        { e: "🏔️", t: "Cabin, cooking what you brought", w: { wholefood: 2, plant: 1 } },
+        { e: "🧘", t: "Wellness retreat, green everything", w: { plant: 2, fitness: 1 } }
+      ]
+    },
+    {
+      q: "Your ideal weekend breakfast is…",
+      opts: [
+        { e: "🍳", t: "A proper cooked breakfast", w: { meat: 2, comfort: 1 } },
+        { e: "🥣", t: "Overnight oats & berries", w: { wholefood: 1, plant: 1, fitness: 1 } },
+        { e: "☕", t: "Just grab a coffee and go", w: { convenience: 2 } },
+        { e: "🥞", t: "Whatever looks new on the menu", w: { adventurous: 2 } }
+      ]
+    },
+    {
+      q: "Peek into your kitchen right now.",
+      opts: [
+        { e: "🧑‍🍳", t: "Stocked — I meal-prep", w: { wholefood: 2, fitness: 1 } },
+        { e: "📱", t: "Takeout menus & a kettle", w: { convenience: 2, comfort: 1 } },
+        { e: "🥤", t: "Shaker bottle & supplements", w: { fitness: 2 } },
+        { e: "🌶️", t: "Always something I haven't tried", w: { adventurous: 2, plant: 1 } }
+      ]
+    },
+    {
+      q: "Money-on-food, what's your rule?",
+      opts: [
+        { e: "💎", t: "Quality ingredients are worth it", w: { wholefood: 2, seafood: 1 } },
+        { e: "⚡", t: "Fast and easy wins", w: { convenience: 2 } },
+        { e: "🎯", t: "Fuel that performs", w: { fitness: 2, meat: 1 } },
+        { e: "🌍", t: "Love variety, spread it around", w: { adventurous: 2, plant: 1 } }
+      ]
+    }
+  ];
+
+  // Archetypes ranked by the user's single strongest axis.
+  var ARCHETYPES = {
+    meat:        { e: "🦁", name: "The Carnivore", desc: "You want food that eats like a meal — protein you can sink your teeth into.", tags: ["Steak nights", "Big protein", "Hearty"] },
+    seafood:     { e: "🐟", name: "The Coastal Eater", desc: "Light, fresh, from the water — you like clean protein that doesn't weigh you down.", tags: ["Fresh fish", "Light & clean", "Omega-3s"] },
+    plant:       { e: "🌱", name: "The Plant-Forward", desc: "Greens, beans and grains do the heavy lifting on your plate.", tags: ["Plant-based", "Fiber-rich", "Colorful"] },
+    dairy:       { e: "🥛", name: "The Comfort Classic", desc: "Yogurt, cheese and familiar staples — simple foods done well.", tags: ["Creamy", "Familiar", "Easy"] },
+    convenience: { e: "⚡", name: "The Minimalist", desc: "Low effort, high payoff — grab-and-go beats a recipe every time.", tags: ["Quick", "No-cook", "Grab & go"] },
+    wholefood:   { e: "🧑‍🍳", name: "The Home Cook", desc: "You'd rather cook it yourself and know exactly what's in it.", tags: ["From scratch", "Whole foods", "Meal-prep"] },
+    fitness:     { e: "🎯", name: "The Optimizer", desc: "Food is fuel. You want the numbers to line up and the performance to follow.", tags: ["Performance", "High-protein", "Efficient"] },
+    adventurous: { e: "🌶️", name: "The Explorer", desc: "Variety is the point — you'll happily rotate through new flavors all week.", tags: ["Variety", "Bold flavors", "New things"] },
+    comfort:     { e: "🍜", name: "The Comfort Seeker", desc: "Food should feel good. You lean toward warm, satisfying, familiar plates.", tags: ["Satisfying", "Warm", "Familiar"] }
   };
 
   // Activities with MET values → kcal = MET × kg × hours.
@@ -674,7 +957,7 @@
       });
       state[key] = btn.getAttribute("data-u");
       onChange();
-      calc();
+      markDirty();
     });
   }
 
@@ -803,10 +1086,32 @@
     // ---- Body composition (needs height) ----
     renderBMI(kg, getHeightCm());
 
-    // ---- Action steps: food, exercise ----
+    // ---- Action steps ----
+    lastKg = kg;
     targets = { protein: protein, carbs: carbsClamped, fat: fat, fiber: fiber };
-    renderFood(activeMacro);
     renderBurn(kg);
+    renderWater();
+    syncFuelView();
+
+    // Persist so a returning (home-screen) user keeps their plan + trackers.
+    LS.set("plan", {
+      weightVal: num("weight"), weightUnit: state.weightUnit,
+      heightUnit: state.heightUnit,
+      heightCm: num("heightCmInput"), heightFt: num("heightFtInput"), heightIn: num("heightInInput"),
+      kg: kg
+    });
+
+    // Button returns to rest state.
+    $("calcBtn").classList.remove("stale");
+    $("calcHint").textContent = "Plan updated. Change a number and recalculate anytime.";
+  }
+
+  // Show the food list only once a taste profile exists.
+  function syncFuelView() {
+    var has = !!profile;
+    $("fuelIntro").style.display = has ? "none" : "";
+    $("fuelResult").style.display = has ? "" : "none";
+    if (has) { renderProfileBanner(); renderFood(activeMacro); }
   }
 
   function setTileGrams(el, grams) {
@@ -816,22 +1121,39 @@
   // ---- Fuel Your Day: foods to cover a macro target ----
   function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 
+  // Score a food against the taste profile (higher = better fit).
+  function foodScore(f) {
+    if (!profile) return 0;
+    var s = 0, w = profile.weights;
+    for (var i = 0; i < f.tags.length; i++) s += (w[f.tags[i]] || 0);
+    return s;
+  }
+
   function renderFood(macro) {
     var group = FOODS[macro];
     var target = Math.round(targets[macro] || 0);
     var list = $("foodList");
+
+    // Sort favorably by taste profile (stable: keep original order on ties).
+    var items = group.items.map(function (f, i) { return { f: f, i: i, s: foodScore(f) }; });
+    items.sort(function (a, b) { return b.s - a.s || a.i - b.i; });
+
+    // Top matches (score above zero) get the "For you" flag — at most 3.
+    var favCount = 0;
     var html = "";
-    for (var i = 0; i < group.items.length; i++) {
-      var f = group.items[i];
+    for (var k = 0; k < items.length; k++) {
+      var f = items[k].f;
+      var isFav = items[k].s > 0 && favCount < 3;
+      if (isFav) favCount++;
       var count = target > 0 ? Math.max(1, Math.round(target / f.val)) : 0;
       var badge = target > 0
         ? '<div class="food-count">×' + count + ' for ' + target + 'g</div>'
         : "";
       html +=
-        '<div class="food-row">' +
+        '<div class="food-row' + (isFav ? ' food-fav' : '') + '">' +
           '<div class="food-emoji">' + f.emoji + '</div>' +
           '<div class="food-main">' +
-            '<div class="food-name">' + esc(f.name) + '</div>' +
+            '<div class="food-name">' + esc(f.name) + (isFav ? '<span class="fav-tag">FOR YOU</span>' : '') + '</div>' +
             '<div class="food-portion">' + esc(f.portion) + '</div>' +
           '</div>' +
           '<div class="food-right">' +
@@ -841,9 +1163,21 @@
         '</div>';
     }
     list.innerHTML = html;
-    $("fuelSub").innerHTML = 'Hit your <strong>' + target + 'g of ' + group.label +
-      '</strong> — the count shows how many of each portion that takes on its own.';
-    $("foodNote").innerHTML = "You won't eat one food to the whole number — <strong>spread 3–4 sources across your meals</strong> and the totals add up.";
+    $("fuelSub").innerHTML = 'Your <strong>' + target + 'g of ' + group.label +
+      '</strong>, sorted for your taste. The count is how many of each portion hits it alone.';
+    $("foodNote").innerHTML = "Starred picks match your profile. <strong>Spread 3–4 sources across your meals</strong> — you won't eat one food to the whole number.";
+  }
+
+  function renderProfileBanner() {
+    if (!profile) return;
+    var a = ARCHETYPES[profile.key];
+    $("profileBanner").innerHTML =
+      '<div class="pb-emoji">' + a.e + '</div>' +
+      '<div class="pb-body">' +
+        '<div class="pb-kicker">Your taste profile</div>' +
+        '<div class="pb-name">' + esc(a.name) + '</div>' +
+        '<div class="pb-desc">' + esc(a.desc) + '</div>' +
+      '</div>';
   }
 
   // ---- Move to Burn It: kcal for 30 min at bodyweight ----
@@ -888,6 +1222,144 @@
         '</a>';
     }
     $("linkList").innerHTML = html;
+  }
+
+  // ---- Hydration ---------------------------------------------------------
+  // Goal ≈ 35 ml per kg bodyweight (common baseline).
+  function waterGoalMl() { return Math.round(lastKg * 35); }
+
+  function getWaterToday() {
+    var rec = LS.get("water");
+    if (!rec || rec.date !== todayKey()) return { date: todayKey(), entries: [] };
+    return rec;
+  }
+  function saveWaterToday(rec) { LS.set("water", rec); }
+
+  function renderWater() {
+    var goal = waterGoalMl();
+    var rec = getWaterToday();
+    var done = rec.entries.reduce(function (s, ml) { return s + ml; }, 0);
+    var pct = goal > 0 ? Math.min(done / goal * 100, 100) : 0;
+
+    // ring
+    var arc = $("waterArc");
+    arc.style.strokeDasharray = pct.toFixed(1) + " " + (100 - pct).toFixed(1);
+    arc.style.transition = "stroke-dasharray 0.6s cubic-bezier(0.22,1,0.36,1)";
+
+    $("waterDone").innerHTML = (done / 1000).toFixed(1) + "<span>L</span>";
+    $("waterGoalLabel").textContent = "of " + (goal / 1000).toFixed(1) + " L";
+    $("waterPct").textContent = Math.round(pct) + "%";
+    $("waterCount").textContent = rec.entries.length + " drink" + (rec.entries.length === 1 ? "" : "s") + " logged today";
+    $("waterUndo").disabled = rec.entries.length === 0;
+
+    var left = Math.max(goal - done, 0);
+    if (goal <= 0) {
+      $("waterMsg").textContent = "Calculate your plan to set a target.";
+    } else if (done >= goal) {
+      $("waterMsg").innerHTML = "🎉 Goal reached — nicely hydrated. Keep sipping.";
+    } else {
+      $("waterMsg").innerHTML = "About <strong>" + (left / 1000).toFixed(1) + " L</strong> to go — roughly " +
+        Math.ceil(left / 250) + " more glass" + (Math.ceil(left / 250) === 1 ? "" : "es") + ".";
+    }
+  }
+
+  function addWater(ml) {
+    var rec = getWaterToday();
+    rec.entries.push(ml);
+    saveWaterToday(rec);
+    renderWater();
+  }
+  function undoWater() {
+    var rec = getWaterToday();
+    rec.entries.pop();
+    saveWaterToday(rec);
+    renderWater();
+  }
+
+  // ---- Taste quiz --------------------------------------------------------
+  function openQuiz() {
+    quizAnswers = [];
+    quizStep = 0;
+    $("quizScrim").classList.add("open");
+    $("quizScrim").setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    renderQuizStep();
+  }
+  function closeQuiz() {
+    $("quizScrim").classList.remove("open");
+    $("quizScrim").setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  function renderQuizStep() {
+    var total = QUESTIONS.length;
+    $("quizProgress").style.width = (quizStep / total * 100) + "%";
+    var q = QUESTIONS[quizStep];
+    var opts = "";
+    for (var i = 0; i < q.opts.length; i++) {
+      var o = q.opts[i];
+      var sel = quizAnswers[quizStep] === i ? " selected" : "";
+      opts +=
+        '<button class="q-opt' + sel + '" data-i="' + i + '" type="button">' +
+          '<span class="qo-emoji">' + o.e + '</span>' +
+          '<span class="qo-text">' + esc(o.t) + '</span>' +
+        '</button>';
+    }
+    $("quizBody").innerHTML =
+      '<div class="q-eyebrow">Question ' + (quizStep + 1) + ' of ' + total + '</div>' +
+      '<div class="q-title">' + esc(q.q) + '</div>' +
+      '<div class="q-options">' + opts + '</div>' +
+      '<div class="q-nav">' +
+        '<button class="q-back" id="qBack" type="button"' + (quizStep === 0 ? " disabled" : "") + '>Back</button>' +
+      '</div>';
+  }
+
+  function selectOption(i) {
+    quizAnswers[quizStep] = i;
+    // brief highlight, then advance
+    renderQuizStep();
+    setTimeout(function () {
+      if (quizStep < QUESTIONS.length - 1) { quizStep++; renderQuizStep(); }
+      else finishQuiz();
+    }, 220);
+  }
+
+  function finishQuiz() {
+    $("quizProgress").style.width = "100%";
+    // tally axis weights
+    var w = {};
+    for (var i = 0; i < QUESTIONS.length; i++) {
+      var ai = quizAnswers[i];
+      if (ai == null) continue;
+      var ow = QUESTIONS[i].opts[ai].w;
+      for (var axis in ow) { if (ow.hasOwnProperty(axis)) w[axis] = (w[axis] || 0) + ow[axis]; }
+    }
+    // dominant axis → archetype (prefer identity axes over convenience/comfort on ties)
+    var order = ["meat","seafood","plant","fitness","wholefood","adventurous","dairy","comfort","convenience"];
+    var bestKey = order[0], bestVal = -1;
+    for (var j = 0; j < order.length; j++) {
+      var k = order[j];
+      if ((w[k] || 0) > bestVal) { bestVal = w[k] || 0; bestKey = k; }
+    }
+    profile = { weights: w, key: bestKey };
+    LS.set("profile", profile);
+    renderQuizResult();
+  }
+
+  function renderQuizResult() {
+    var a = ARCHETYPES[profile.key];
+    var tags = a.tags.map(function (t) { return '<span class="qr-tag">' + esc(t) + '</span>'; }).join("");
+    $("quizBody").innerHTML =
+      '<div class="qr-wrap">' +
+        '<div class="qr-emoji">' + a.e + '</div>' +
+        '<div class="qr-kicker">You are</div>' +
+        '<div class="qr-name">' + esc(a.name) + '</div>' +
+        '<div class="qr-desc">' + esc(a.desc) + '</div>' +
+        '<div class="qr-tags">' + tags + '</div>' +
+      '</div>' +
+      '<button class="cta-btn" id="qDone" type="button">' +
+        '<span class="cta-label">See my foods</span><span class="cta-arrow">→</span>' +
+      '</button>';
   }
 
   // pathLength is 100, so dashes are in "percent of circumference"
@@ -972,9 +1444,33 @@
     return "rgba(" + r + "," + g + "," + b + "," + a + ")";
   }
 
-  // ---- Wire up live inputs ----
+  // ---- Inputs: no auto-calc; the button drives it ----
+  function hasWeight() { return getWeightKg() !== null && getWeightKg() > 0; }
+  var resultsShown = function () { return !$("results").classList.contains("hidden"); };
+
+  function markDirty() {
+    var ok = hasWeight();
+    $("calcBtn").disabled = !ok;
+    if (!ok) {
+      $("calcBtn").classList.remove("stale");
+      $("calcHint").textContent = "Enter your weight to begin.";
+    } else if (resultsShown()) {
+      $("calcBtn").classList.add("stale");
+      $("calcHint").textContent = "Numbers changed — tap to recalculate.";
+    } else {
+      $("calcBtn").classList.remove("stale");
+      $("calcHint").textContent = "Ready when you are.";
+    }
+  }
+
   ["weight", "heightCmInput", "heightFtInput", "heightInInput"].forEach(function (id) {
-    $(id).addEventListener("input", calc);
+    $(id).addEventListener("input", markDirty);
+  });
+
+  $("calcBtn").addEventListener("click", function () {
+    if (!hasWeight()) { $(("weight")).focus(); return; }
+    calc();
+    $("results").scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
   // ---- Macro food tabs ----
@@ -988,8 +1484,58 @@
     renderFood(activeMacro);
   });
 
+  // ---- Hydration buttons ----
+  Array.prototype.forEach.call(document.querySelectorAll(".water-add"), function (btn) {
+    btn.addEventListener("click", function () { addWater(parseInt(btn.getAttribute("data-ml"), 10)); });
+  });
+  $("waterUndo").addEventListener("click", undoWater);
+
+  // ---- Taste quiz wiring ----
+  $("startQuiz").addEventListener("click", openQuiz);
+  $("redoQuiz").addEventListener("click", openQuiz);
+  $("quizClose").addEventListener("click", closeQuiz);
+  $("quizScrim").addEventListener("click", function (e) { if (e.target === this) closeQuiz(); });
+  $("quizBody").addEventListener("click", function (e) {
+    var opt = e.target.closest(".q-opt");
+    if (opt) { selectOption(parseInt(opt.getAttribute("data-i"), 10)); return; }
+    if (e.target.closest("#qBack")) { if (quizStep > 0) { quizStep--; renderQuizStep(); } return; }
+    if (e.target.closest("#qDone")) { closeQuiz(); syncFuelView(); return; }
+  });
+
+  // ---- Restore a saved session ----
+  function restore() {
+    profile = LS.get("profile");           // taste profile persists across days
+    var plan = LS.get("plan");
+    if (plan && plan.weightVal != null) {
+      state.weightUnit = plan.weightUnit || "kg";
+      state.heightUnit = plan.heightUnit || "cm";
+      $("weight").value = plan.weightVal;
+      if (plan.heightCm != null) $("heightCmInput").value = plan.heightCm;
+      if (plan.heightFt != null) $("heightFtInput").value = plan.heightFt;
+      if (plan.heightIn != null) $("heightInInput").value = plan.heightIn;
+      // reflect units in the UI
+      syncUnitUI();
+      calc(); // rebuild the full plan + trackers for the returning user
+    } else {
+      markDirty();
+    }
+  }
+
+  function syncUnitUI() {
+    $("weightUnitLabel").textContent = state.weightUnit;
+    Array.prototype.forEach.call($("weightUnit").querySelectorAll("button"), function (b) {
+      b.classList.toggle("active", b.getAttribute("data-u") === state.weightUnit);
+    });
+    Array.prototype.forEach.call($("heightUnit").querySelectorAll("button"), function (b) {
+      b.classList.toggle("active", b.getAttribute("data-u") === state.heightUnit);
+    });
+    var isCm = state.heightUnit === "cm";
+    $("heightCm").style.display = isCm ? "" : "none";
+    $("heightFt").style.display = isCm ? "none" : "";
+  }
+
   renderLinks();
-  calc();
+  restore();
 })();
 
 // Register the offline service worker (progressive enhancement).

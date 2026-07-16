@@ -28,15 +28,24 @@ computes daily fat-loss nutrition targets from just **weight** and **height**.
 6. Carbs = (calories − protein·4 − fat·9) ÷ 4 → grams (`≈226 g`)
 
 **Beyond the formula (the "useful expansion"):**
+- A deliberate **Calculate My Plan** button (no auto-calc) drives the results.
 - Macro calorie-distribution ring (protein / fat / carbs %)
 - BMI, category, and a healthy-weight range for the entered height
-- **Fuel Your Day** — real foods per macro, with how many portions of each
-  it takes to hit *your* protein / carb / fat / fiber target
+- **Taste profile** — a short, indirect lifestyle quiz (never "do you like
+  chicken?") infers a food archetype (The Carnivore, The Minimalist, The
+  Plant-Forward…) and **re-sorts every food list to favor what you'd eat**,
+  starring your top matches
+- **Fuel Your Day** — real foods per macro, personalized + with how many
+  portions of each it takes to hit *your* protein / carb / fat / fiber target
+- **Hydration** — daily water target (~35 ml/kg) with a tap-to-log tracker
+  (glass / bottle / large), progress ring, undo, and per-day persistence
 - **Move to Burn It** — a fat-loss training strategy plus calories burned in
   30 min for 11 activities, scaled to your bodyweight (MET-based)
 - **Keep Going** — curated links to trusted trackers & guides (Cronometer,
   USDA FoodData Central, Examine, NHS, CDC, r/fitness wiki)
-- kg/lb and cm/ft-in unit toggles, live updating, light & dark mode
+- Your plan, taste profile, and water log **persist locally**, so the
+  home-screen app remembers you between visits
+- kg/lb and cm/ft-in unit toggles, light & dark mode
 
 **Run it locally:** open `index.html` in any browser (or `npx http-server .`).
 
